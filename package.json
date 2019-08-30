@@ -1,0 +1,38 @@
+{
+  "name": "authenticationservice",
+  "version": "1.0.0",
+  "description": "A JWT based stateless authentication service implementing region restricted and short-lived access tokens and a whitelisted refresh tokens. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bouzinabdotcom/AuthenticationService.git"
+  },
+  "keywords": [
+    "jwt",
+    "stateless",
+    "auth",
+    "users",
+    "access",
+    "refresh",
+    "token",
+    "json",
+    "js",
+    "node",
+    "nodejs",
+    "service",
+    "authentication"
+  ],
+  "author": "Omar Bouzinab",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/bouzinabdotcom/AuthenticationService/issues"
+  },
+  "homepage": "https://github.com/bouzinabdotcom/AuthenticationService#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.6.11"
+  }
+}
