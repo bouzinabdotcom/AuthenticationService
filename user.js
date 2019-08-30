@@ -1,5 +1,5 @@
 /**
- * Here the user model reffers to both users, authors and admins
+ * Here the user model reffers to regular users, authors and admins
  */
 
 
