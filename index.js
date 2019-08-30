@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express();
 
-require('./database')();
+const config = require('config');
+
+
+const db_user = config.has('db_user') ? config.get('db_user') : "";
+const db_pass = config.has('db_pass') ? config.get('db_pass') : "";
+require('./database')(db_user, db_pass);
 
 
 app.use(express.json());

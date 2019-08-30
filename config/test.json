@@ -1,5 +1,5 @@
 {
-    "app_db_name": "myApp",
+    "app_db_name": "test_myApp",
     "app_db_host": "localhost",
     "app_db_port": "27017"
 }

@@ -4,7 +4,7 @@
   "description": "A JWT based stateless authentication service implementing region restricted and short-lived access tokens and a whitelisted refresh tokens. ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "find ./tests -name '*.test.js' | xargs mocha -R spec"
   },
   "repository": {
     "type": "git",
@@ -37,5 +37,9 @@
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.6.11"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
   }
 }
