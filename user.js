@@ -46,11 +46,8 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);    
 
-async function hashpwd(pwd) {
-    return await bcrypt.hash(pwd, 10);
-}
+
 
 
 
 exports.User = User;
-exports.hash = hashpwd;

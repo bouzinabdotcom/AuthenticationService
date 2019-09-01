@@ -1,5 +1,12 @@
 {
-    "db_user": "APP_DB_USER",
-    "db_pass": "APP_DB_PASS"        
+    "app": {
+        "name": "APP_NAME"
+    },
+    "db": {
+        "user": "APP_DB_USER",
+        "pass": "APP_DB_PASS" 
+    },
+    "jwt_secret": "AUTH_JWT_SECRET"
+           
 
 }

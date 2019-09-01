@@ -1,20 +1,22 @@
 const express = require('express');
 const app = express();
 
-const config = require('config');
+const config = require('config'),
+      requestip = require('request-ip'),
+      login = require('./routes/login');
 
-
-const db_user = config.has('db_user') ? config.get('db_user') : "";
-const db_pass = config.has('db_pass') ? config.get('db_pass') : "";
+const db_user = config.has('db.user') ? config.get('db.user') : "";
+const db_pass = config.has('db.pass') ? config.get('db.pass') : "";
 require('./database')(db_user, db_pass);
 
 
 app.use(express.json());
 
+app.use(requestip.mw());
 
-app.get('/', (req, res) => {
-    res.send('Hello world');
-});
+app.use('/login', login);
+
+
 
 const port = process.env.AUTH_PORT || 3001;
 
