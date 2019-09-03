@@ -4,16 +4,13 @@ const express = require('express'),
       error = require('../error'),
       bcrypt = require('bcrypt'),
       _ = require('lodash'),
-      {ipFormat4} = require('../ip2region'),
       uniqid = require('uniqid'),
       {createIdToken, createAccessToken, createRefreshToken} = require('../tokens');
 
 
 
 router.post('/', async (req, res) => {
-
-    const client_ip = ipFormat4(req.clientIp);
-
+    
     let user;
     try {
         user = await User.findOne({username: req.body.username});
@@ -35,8 +32,8 @@ router.post('/', async (req, res) => {
 
 
     const itoken = createIdToken(user);
-    const atoken = createAccessToken(user, client_ip, rtji);
-    const rtoken = createRefreshToken(user, client_ip, rjti);
+    const atoken = createAccessToken(user, rtji);
+    const rtoken = createRefreshToken(user, rjti);
 
     res.send({
         id: itoken,

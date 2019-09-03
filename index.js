@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 
 const config = require('config'),
-      requestip = require('request-ip'),
       login = require('./routes/login');
 
 const db_user = config.has('db.user') ? config.get('db.user') : "";
@@ -12,7 +11,6 @@ require('./database')(db_user, db_pass);
 
 app.use(express.json());
 
-app.use(requestip.mw());
 
 app.use('/login', login);
 

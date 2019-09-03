@@ -1,11 +1,10 @@
 const config = require('config'),
       jwt = require('jsonwebtoken'),
-      redis = require('redis'),
-      getIpRegion = require('./ip2region');
+      redis = require('redis');
 
 
 const access_ttl = 60*30; //30m
-const refresh_ttl = 60*60*24*5; //5d
+const refresh_ttl = 60*60*24*7; //1w
 
 function createToken(payload, ttl) {
     const secret = config.get('jwt_secret');
@@ -26,9 +25,8 @@ function createIdToken(user) {
     return createToken(payload);
 }
 
-function createAccessToken(user, ip, refresh_jti) {
+function createAccessToken(user, refresh_jti) {
     const payload = {
-        aud: ip,
         iss: config.get('app.name'),
         userid: user._id,
         rjti: refresh_jti
@@ -38,28 +36,32 @@ function createAccessToken(user, ip, refresh_jti) {
 
 
 
-function logToken(jti, region) {
+function logToken(jti) {
     const client = redis.createClient();
     client.on("error", (err) => {
         console.log(err.message);
         //log error to some kind of db (later)
     });
-    client.set(jti, region, 'EX', refresh_ttl, client.quit);
+    try {
+        client.set(jti, " ", 'EX', refresh_ttl, client.quit);
+    }
+    catch(err) {
+        console.log(err.message);
+        //log error
+    }
 }
 
-function createRefreshToken(user, ip, jti) {
+function createRefreshToken(user, jti) {
 
-    const region = getIpRegion(ip);
 
     const payload = {
         jti: jti,
-        aud: ip,
         iss: config.get('app.name'),
         userid: user._id
     };
 
     const token = createToken(payload, refresh_ttl);
-    logToken(jti, region);
+    logToken(jti);
 
     return token;
 }
