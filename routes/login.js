@@ -31,14 +31,13 @@ router.post('/', async (req, res) => {
     const rjti = uniqid();
 
 
-    const itoken = createIdToken(user);
-    const atoken = createAccessToken(user, rtji);
-    const rtoken = createRefreshToken(user, rjti);
+    const atoken = createAccessToken(user._id, rtji);
+    const rtoken = createRefreshToken(user._id, rjti);
 
     res.send({
-        id: itoken,
         access: atoken,
-        refresh: rtoken
+        refresh: rtoken,
+        user: user
     });
 });
 

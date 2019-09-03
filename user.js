@@ -4,7 +4,6 @@
 
 
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const _ = require('lodash');
 
 const userSchema = new mongoose.Schema({

@@ -8,27 +8,18 @@ const refresh_ttl = 60*60*24*7; //1w
 
 function createToken(payload, ttl) {
     const secret = config.get('jwt_secret');
-    if(ttl) {
-        return jwt.sign(payload, secret, {expiresIn: ttl, algorithm: "HS256"});
-    }
-    //if ttl isn't provided it means we're creating an id token 
-    return jwt.sign(payload);
+    
+    
+    return jwt.sign(payload, secret, {expiresIn: ttl, algorithm: "HS256"});
+    
 }
 
-function createIdToken(user) {
-    const payload = {
-        id: user._id,
-        username: user.username,
-        email: user.email.address,
-        privilege: user.privilege
-    };
-    return createToken(payload);
-}
 
-function createAccessToken(user, refresh_jti) {
+
+function createAccessToken(userid, refresh_jti) {
     const payload = {
         iss: config.get('app.name'),
-        userid: user._id,
+        userid: userid,
         rjti: refresh_jti
     };
     return createToken(payload, access_ttl);
@@ -51,13 +42,13 @@ function logToken(jti) {
     }
 }
 
-function createRefreshToken(user, jti) {
+function createRefreshToken(userid, jti) {
 
 
     const payload = {
         jti: jti,
         iss: config.get('app.name'),
-        userid: user._id
+        userid: userid
     };
 
     const token = createToken(payload, refresh_ttl);
@@ -67,5 +58,5 @@ function createRefreshToken(user, jti) {
 }
 
 module.exports.createAccessToken = createAccessToken;
-module.exports.createIdToken = createIdToken;
 module.exports.createRefreshToken = createRefreshToken;
+module.exports.createToken = createToken;
