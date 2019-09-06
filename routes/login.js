@@ -26,12 +26,14 @@ router.post('/', async (req, res) => {
     const pwdIsValid = await bcrypt.compare(req.body.pwd, user.pwd);
     if(!pwdIsValid) return res.status(400).send(authError);
 
-    user = _.omit(user, "pwd");
+    
+    user = _.omit(user.toJSON(), "pwd");
+    user = _.omit(user, "__v");
 
     const rjti = uniqid();
 
 
-    const atoken = createAccessToken(user._id, rtji);
+    const atoken = createAccessToken(user._id, rjti);
     const rtoken = createRefreshToken(user._id, rjti);
 
     res.send({

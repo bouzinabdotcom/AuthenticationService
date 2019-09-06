@@ -19,3 +19,5 @@ app.use('/login', login);
 const port = process.env.AUTH_PORT || 3001;
 
 app.listen(port, () => console.log(`Listening on port ${port}...`));
+
+if(process.env.NODE_ENV='test') module.exports = app;

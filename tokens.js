@@ -34,12 +34,15 @@ function logToken(jti) {
         //log error to some kind of db (later)
     });
     try {
-        client.set(jti, " ", 'EX', refresh_ttl, client.quit);
+        client.set(jti, " ", 'EX', refresh_ttl);
+
     }
     catch(err) {
         console.log(err.message);
         //log error
     }
+
+    client.quit();
 }
 
 function createRefreshToken(userid, jti) {
