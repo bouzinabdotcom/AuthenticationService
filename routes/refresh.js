@@ -1,6 +1,5 @@
 const express = require('express'),
       router = new express.Router(),
-      config = require('config'),
       {verifyToken, issuer, tokenRegion, createAccessToken} = require('../tokens'),
       error = require('../error');
 
@@ -38,7 +37,7 @@ router.post('/', (req, res) => {
     const invalidTokenLocation = error('InvalidTokenLocation', "Token not valid at your location.");
     
     if(tokenWhitelisted === false) return res.status(400).send(invalidToken);
-    console.log(payload.jti);
+    console.log(payload.jti)
     //3- issue new token
     const accessToken = createAccessToken(payload.userid, payload.jti);
     res.send({accessToken: accessToken});
