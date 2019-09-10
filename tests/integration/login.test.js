@@ -88,18 +88,18 @@ describe('#Login', () => {
                 expect(res.body).to.have.property('type', 'Database Problem');
                 expect(res.body).to.have.property('body', "Something went wrong.");
 
-                database('', '');
+                
                 done();
             });
 
     });
 
-    after(async () => {
+    // after(async () => {
 
-        if(mongoose.connections.length == 1 && mongoose.connections[0].readyState == 0) {
-            database('', '');
-        }
-        await User.findOneAndDelete({username: 'test'});
-        await mongoose.connections[0].close();
-    });
+    //     if(mongoose.connections.length == 1 && mongoose.connections[0].readyState == 0) {
+    //         await database('', '');
+    //     }
+    //     await User.findOneAndDelete({username: 'test'});
+    //     await mongoose.connections[0].close();
+    // });
 });

@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 
 const config = require('config'),
-      login = require('./routes/login');
+      login = require('./routes/login'),
+      refresh = require('./routes/refresh');
 
 const db_user = config.has('db.user') ? config.get('db.user') : "";
 const db_pass = config.has('db.pass') ? config.get('db.pass') : "";
@@ -13,6 +14,8 @@ app.use(express.json());
 
 
 app.use('/login', login);
+app.use('/refresh', refresh);
+
 
 
 

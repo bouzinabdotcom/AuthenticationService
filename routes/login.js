@@ -5,7 +5,7 @@ const express = require('express'),
       bcrypt = require('bcrypt'),
       _ = require('lodash'),
       uniqid = require('uniqid'),
-      {createIdToken, createAccessToken, createRefreshToken} = require('../tokens');
+      {createAccessToken, createRefreshToken} = require('../tokens');
 
 
 

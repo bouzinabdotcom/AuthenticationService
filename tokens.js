@@ -6,11 +6,13 @@ const config = require('config'),
 const access_ttl = 60*30; //30m
 const refresh_ttl = 60*60*24*7; //1w
 
+const token_issuer = config.get('app.name');
+const jwt_secret = config.get('jwt_secret');
+
 function createToken(payload, ttl) {
-    const secret = config.get('jwt_secret');
+     
     
-    
-    return jwt.sign(payload, secret, {expiresIn: ttl, algorithm: "HS256"});
+    return jwt.sign(payload, jwt_secret, {expiresIn: ttl, algorithm: "HS256"});
     
 }
 
@@ -18,7 +20,7 @@ function createToken(payload, ttl) {
 
 function createAccessToken(userid, refresh_jti) {
     const payload = {
-        iss: config.get('app.name'),
+        iss: token_issuer,
         userid: userid,
         rjti: refresh_jti
     };
@@ -50,7 +52,7 @@ function createRefreshToken(userid, jti) {
 
     const payload = {
         jti: jti,
-        iss: config.get('app.name'),
+        iss: token_issuer,
         userid: userid
     };
 
@@ -60,6 +62,27 @@ function createRefreshToken(userid, jti) {
     return token;
 }
 
+
+function verifyToken(token) {
+    
+    return jwt.verify(token, jwt_secret, {algorithm: "HS256"})
+}
+
+function tokenRegion(jti, callback){
+    const client = redis.createClient();
+    client.on("error", (err) => {
+        console.log(err.message);
+        //log error to some kind of db (later)
+    });
+    client.get(jti, callback);
+
+    client.quit();
+}
+
+
 module.exports.createAccessToken = createAccessToken;
 module.exports.createRefreshToken = createRefreshToken;
 module.exports.createToken = createToken;
+module.exports.verifyToken = verifyToken;
+module.exports.issuer = token_issuer;
+module.exports.tokenRegion = tokenRegion;
