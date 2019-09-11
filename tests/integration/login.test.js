@@ -94,12 +94,12 @@ describe('#Login', () => {
 
     });
 
-    // after(async () => {
+    after(async () => {
 
-    //     if(mongoose.connections.length == 1 && mongoose.connections[0].readyState == 0) {
-    //         await database('', '');
-    //     }
-    //     await User.findOneAndDelete({username: 'test'});
-    //     await mongoose.connections[0].close();
-    // });
+        if(mongoose.connections.length == 1 && mongoose.connections[0].readyState == 0) {
+            await database('', '');
+        }
+        await User.findOneAndDelete({username: 'test'});
+        await mongoose.connections[0].close();
+    });
 });

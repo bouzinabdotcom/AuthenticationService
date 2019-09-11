@@ -1,5 +1,6 @@
 const express = require('express'),
       router = new express.Router(),
+      tokens = require('../tokens'),
       {verifyToken, issuer, tokenRegion, createAccessToken} = require('../tokens'),
       error = require('../error');
 
@@ -7,7 +8,7 @@ const express = require('express'),
 
 
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     //1- validate refresh token
     let payload;
     try{
@@ -23,24 +24,24 @@ router.post('/', (req, res) => {
         return res.status(400).send(invalidToken);
         
     }
-    let tokenWhitelisted;
+    let tokenWhitelisted = false;
     let tRegion;
 
     //2- validate whitelist and region to implement later
     // console.log(payload);
-    tokenRegion(payload.jti, (err, region)=>{
-        if(err || region===null) return tokenWhitelisted = false;
-        
-        tokenWhitelisted = true;
-        return tRegion=region;
-    });
+
+    const region = await tokens.tokenRegion(payload.jti);
     const invalidTokenLocation = error('InvalidTokenLocation', "Token not valid at your location.");
     
+    
+    if(region != null) tokenWhitelisted = true;
+    console.log(region);
+    console.log(tokenWhitelisted);
     if(tokenWhitelisted === false) return res.status(400).send(invalidToken);
-    console.log(payload.jti)
+
     //3- issue new token
     const accessToken = createAccessToken(payload.userid, payload.jti);
-    res.send({accessToken: accessToken});
+    res.send({access: accessToken});
 
 });
 

@@ -1,6 +1,11 @@
 const config = require('config'),
       jwt = require('jsonwebtoken'),
-      redis = require('redis');
+      redis = require('redis'),
+      bluebird = require('bluebird');
+
+
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
 
 
 const access_ttl = 60*30; //30m
@@ -29,14 +34,14 @@ function createAccessToken(userid, refresh_jti) {
 
 
 
-function logToken(jti) {
+async function logToken(jti) {
     const client = redis.createClient();
     client.on("error", (err) => {
         console.log(err.message);
         //log error to some kind of db (later)
     });
     try {
-        client.set(jti, " ", 'EX', refresh_ttl);
+        await client.setAsync(jti, "test", 'EX', refresh_ttl);
 
     }
     catch(err) {
@@ -68,15 +73,22 @@ function verifyToken(token) {
     return jwt.verify(token, jwt_secret, {algorithm: "HS256"})
 }
 
-function tokenRegion(jti, callback){
+async function tokenRegion(jti){
     const client = redis.createClient();
     client.on("error", (err) => {
         console.log(err.message);
         //log error to some kind of db (later)
     });
-    client.get(jti, callback);
-
+    let res = null;
+    try{
+        res = await client.getAsync(jti);
+    }
+    catch(err) {
+        return ;
+    }
+    
     client.quit();
+    return res;
 }
 
 

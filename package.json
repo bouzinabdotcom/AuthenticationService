@@ -33,6 +33,7 @@
   "homepage": "https://github.com/bouzinabdotcom/AuthenticationService#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "bluebird": "^3.5.5",
     "chai-jwt": "^2.0.0",
     "config": "^3.2.2",
     "express": "^4.17.1",
@@ -40,6 +41,7 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.6.11",
     "redis": "^2.8.0",
+    "sinon": "^7.4.2",
     "uniqid": "^5.0.3"
   },
   "devDependencies": {
