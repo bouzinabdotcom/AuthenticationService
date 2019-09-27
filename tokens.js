@@ -70,7 +70,7 @@ function createRefreshToken(userid, jti) {
 
 function verifyToken(token) {
     
-    return jwt.verify(token, jwt_secret, {algorithm: "HS256"})
+    return jwt.verify(token, jwt_secret, {algorithm: "HS256"});
 }
 
 async function tokenRegion(jti){
@@ -84,7 +84,7 @@ async function tokenRegion(jti){
         res = await client.getAsync(jti);
     }
     catch(err) {
-        return ;
+        return null;
     }
     
     client.quit();

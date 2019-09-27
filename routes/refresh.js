@@ -24,8 +24,8 @@ router.post('/', async (req, res) => {
         return res.status(400).send(invalidToken);
         
     }
-    let tokenWhitelisted = false;
-    let tRegion;
+    
+    
 
     //2- validate whitelist and region to implement later
     // console.log(payload);
@@ -34,10 +34,8 @@ router.post('/', async (req, res) => {
     const invalidTokenLocation = error('InvalidTokenLocation', "Token not valid at your location.");
     
     
-    if(region != null) tokenWhitelisted = true;
-    console.log(region);
-    console.log(tokenWhitelisted);
-    if(tokenWhitelisted === false) return res.status(400).send(invalidToken);
+    
+    if(region == null) return res.status(400).send(invalidTokenLocation);
 
     //3- issue new token
     const accessToken = createAccessToken(payload.userid, payload.jti);
