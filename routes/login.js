@@ -5,11 +5,12 @@ const express = require('express'),
       bcrypt = require('bcrypt'),
       _ = require('lodash'),
       uniqid = require('uniqid'),
-      {createAccessToken, createRefreshToken} = require('../tokens');
+      {createAccessToken, createRefreshToken} = require('../tokens'),
+      expressIp = require('express-ip-middleware');
 
 
 
-router.post('/', async (req, res) => {
+router.post('/', expressIp(), async (req, res) => {
     
     let user;
     try {
@@ -32,9 +33,9 @@ router.post('/', async (req, res) => {
 
     const rjti = uniqid();
 
-
+    const region = req.ipInfo.region;
     const atoken = createAccessToken(user._id, rjti);
-    const rtoken = createRefreshToken(user._id, rjti);
+    const rtoken = createRefreshToken(user._id, rjti, region);
 
     res.send({
         access: atoken,

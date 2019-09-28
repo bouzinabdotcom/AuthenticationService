@@ -4,7 +4,8 @@ const app = express();
 const config = require('config'),
       login = require('./routes/login'),
       refresh = require('./routes/refresh'),
-      access = require('./routes/access');
+      access = require('./routes/access'),
+      logout = require('./routes/logout');
 
 const db_user = config.has('db.user') ? config.get('db.user') : "";
 const db_pass = config.has('db.pass') ? config.get('db.pass') : "";
@@ -17,6 +18,8 @@ app.use(express.json());
 app.use('/login', login);
 app.use('/refresh', refresh);
 app.use('/access', access);
+app.use('/logout', logout);
+
 
 
 

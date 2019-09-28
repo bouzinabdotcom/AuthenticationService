@@ -34,14 +34,14 @@ function createAccessToken(userid, refresh_jti) {
 
 
 
-async function logToken(jti) {
+async function logToken(jti, region) {
     const client = redis.createClient();
     client.on("error", (err) => {
         console.log(err.message);
         //log error to some kind of db (later)
     });
     try {
-        await client.setAsync(jti, "test", 'EX', refresh_ttl);
+        await client.setAsync(jti, region, 'EX', refresh_ttl);
 
     }
     catch(err) {
@@ -52,7 +52,7 @@ async function logToken(jti) {
     client.quit();
 }
 
-function createRefreshToken(userid, jti) {
+function createRefreshToken(userid, jti, region) {
 
 
     const payload = {
@@ -62,7 +62,7 @@ function createRefreshToken(userid, jti) {
     };
 
     const token = createToken(payload, refresh_ttl);
-    logToken(jti);
+    logToken(jti, region);
 
     return token;
 }
@@ -99,6 +99,21 @@ async function tokenRegion(jti){
     return res;
 }
 
+async function deleteToken(jti) {
+    const client = redis.createClient();
+    client.on("error", (err) => {
+        console.log(err.message);
+    });
+
+    try{
+        await client.delAsync(jti);
+    }
+    catch(err) {
+        return ;
+        //log problem
+    }
+}
+
 
 module.exports.createAccessToken = createAccessToken;
 module.exports.createRefreshToken = createRefreshToken;
@@ -108,3 +123,4 @@ module.exports.issuer = token_issuer;
 module.exports.tokenRegion = tokenRegion;
 module.exports.verifyAccessPayload = verifyAccessPayload;
 module.exports.verifyRefreshPayload = verifyRefreshPayload;
+module.exports.deleteToken = deleteToken;
