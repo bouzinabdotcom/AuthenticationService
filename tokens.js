@@ -73,6 +73,14 @@ function verifyToken(token) {
     return jwt.verify(token, jwt_secret, {algorithm: "HS256"});
 }
 
+function verifyAccessPayload(payload){
+    return payload.hasOwnProperty("userid") && payload.hasOwnProperty("rjti") && payload.hasOwnProperty("iss");
+}
+
+function verifyRefreshPayload(payload){
+    return payload.hasOwnProperty("userid") && payload.hasOwnProperty("jti") && payload.hasOwnProperty("iss");
+}
+
 async function tokenRegion(jti){
     const client = redis.createClient();
     client.on("error", (err) => {
@@ -98,3 +106,5 @@ module.exports.createToken = createToken;
 module.exports.verifyToken = verifyToken;
 module.exports.issuer = token_issuer;
 module.exports.tokenRegion = tokenRegion;
+module.exports.verifyAccessPayload = verifyAccessPayload;
+module.exports.verifyRefreshPayload = verifyRefreshPayload;

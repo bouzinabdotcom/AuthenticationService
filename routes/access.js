@@ -1,6 +1,6 @@
 const express = require("express"),
       router = new express.Router(),
-      {verifyToken, issuer} = require('../tokens'),
+      tokens = require('../tokens'),
       error = require('../error');
 
 
@@ -11,14 +11,14 @@ const express = require("express"),
         
         let payload;
         try {
-            payload = verifyToken(access_token);
+            payload = tokens.verifyToken(access_token);
         }
         catch(err) {
             return res.status(400).send(error('InvalidToken', err.message));
         }
 
         const invalidToken = error('InvalidToken', "Token not valid for this application.");
-        if(payload.iss !== issuer) {
+        if(!tokens.verifyAccessPayload(payload) || payload.iss !== tokens.issuer) {
             
             return res.status(400).send(invalidToken);
             
