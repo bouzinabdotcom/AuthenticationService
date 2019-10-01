@@ -2,12 +2,10 @@
     "app": {
         "name": "APP_NAME"
     },
-    "db": {
-        "user": "APP_DB_USER",
-        "pass": "APP_DB_PASS" 
-    },
     "jwt_secret": "AUTH_JWT_SECRET",
-    "iploc_host": "IPLOC_HOST"
+    "iploc_host": "IPLOC_HOST",
+    "mongoDbUri": "MONGODB_URI",
+    "redisUrl": "REDISCLOUD_URL"
            
 
 }

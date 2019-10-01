@@ -13,6 +13,7 @@ const refresh_ttl = 60*60*24*7; //1w
 
 const token_issuer = config.get('app.name');
 const jwt_secret = config.get('jwt_secret');
+const redisUrl = config.get('redisUrl');
 
 function createToken(payload, ttl) {
      
@@ -35,7 +36,7 @@ function createAccessToken(userid, refresh_jti) {
 
 
 async function logToken(jti, region) {
-    const client = redis.createClient();
+    const client = redis.createClient(redisUrl);
     client.on("error", (err) => {
         console.log(err.message);
         //log error to some kind of db (later)
@@ -82,7 +83,7 @@ function verifyRefreshPayload(payload){
 }
 
 async function tokenRegion(jti){
-    const client = redis.createClient();
+    const client = redis.createClient(redisUrl);
     client.on("error", (err) => {
         console.log(err.message);
         //log error to some kind of db (later)
@@ -100,7 +101,7 @@ async function tokenRegion(jti){
 }
 
 async function deleteToken(jti) {
-    const client = redis.createClient();
+    const client = redis.createClient(redisUrl);
     client.on("error", (err) => {
         console.log(err.message);
     });
