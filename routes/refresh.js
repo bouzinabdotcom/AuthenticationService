@@ -41,8 +41,10 @@ router.post('/', expressIp(), async (req, res) => {
     
     if(region === null) return res.status(400).send(userLoggedOut);
 
-    if(region !== reqRegion) return res.status(400).send(invalidTokenLocation);
-
+    if(region !== reqRegion){
+        tokens.deleteToken(payload.jti);
+        return res.status(400).send(invalidTokenLocation);
+    }
     //3- issue new token
     const accessToken = tokens.createAccessToken(payload.userid, payload.jti);
     res.send({access: accessToken});
