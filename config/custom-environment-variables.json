@@ -3,7 +3,6 @@
         "name": "APP_NAME"
     },
     "jwt_secret": "AUTH_JWT_SECRET",
-    "iploc_host": "IPLOC_HOST",
     "mongoDbUri": "MONGODB_URI",
     "redisUrl": "REDISCLOUD_URL"
            
