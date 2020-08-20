@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/bouzinabdotcom/AuthenticationService#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bluebird": "^3.5.5",
     "chai-jwt": "^2.0.0",
     "config": "^3.2.2",
