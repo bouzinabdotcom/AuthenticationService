@@ -41,7 +41,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.7.5",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "uniqid": "^5.0.3"
   },
   "devDependencies": {
