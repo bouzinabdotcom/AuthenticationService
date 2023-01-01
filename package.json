@@ -35,7 +35,7 @@
     "bcrypt": "^3.0.6",
     "bluebird": "^3.5.5",
     "chai-jwt": "^2.0.0",
-    "config": "^3.2.2",
+    "config": "^3.3.8",
     "express": "^4.17.1",
     "express-ip-middleware": "^1.1.0",
     "jsonwebtoken": "^8.5.1",
